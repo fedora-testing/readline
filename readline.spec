@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines.
 Name: readline
 Version: 4.3
-Release: 2
+Release: 3
 License: GPL
 Group: System Environment/Libraries
 Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.bz2
@@ -42,7 +42,7 @@ installed. You also need to have the readline package installed.
 # XXX don't bother about this
 #%patch3 -p1 -b .booleancase
 #%patch4 -p1 -b .utf8
-#%patch5 -p1 -b .utf8
+#%patch5 -p1 -b .oom
 
 libtoolize --copy --force
 autoconf || autoconf-2.53
@@ -99,7 +99,7 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
-* Wed Aug 07 2002 Phil Knirsch <pknirsch@redhat.com> 4.3-2
+* Wed Aug 07 2002 Phil Knirsch <pknirsch@redhat.com> 4.3-3
 - Fixed Esc-O-M stack overflow bug.
 
 * Mon Jul 22 2002 Phil Knirsch <pknirsch@redhat.com> 4.3-1
