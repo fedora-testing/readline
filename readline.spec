@@ -1,12 +1,17 @@
 Summary: A library for editing typed command lines.
 Name: readline
 Version: 4.3
-Release: 7
+Release: 9
 License: GPL
 Group: System Environment/Libraries
 Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.bz2
 Patch0: readline-4.1-outdated.patch
 Patch1: ftp://ftp.cwru.edu/pub/bash/readline-4.3-patches/readline43-001
+Patch2: ftp://ftp.cwru.edu/pub/bash/readline-4.3-patches/readline43-002
+Patch3: ftp://ftp.cwru.edu/pub/bash/readline-4.3-patches/readline43-003
+Patch4: ftp://ftp.cwru.edu/pub/bash/readline-4.3-patches/readline43-004
+Patch5: ftp://ftp.cwru.edu/pub/bash/readline-4.3-patches/readline43-005
+Patch6: readline-4.3-no_rpath.patch
 Prereq: /sbin/install-info /sbin/ldconfig
 Buildroot: %{_tmppath}/%{name}-root
 BuildRequires: sed autoconf
@@ -23,6 +28,7 @@ commands.
 Summary: Files needed to develop programs which use the readline library.
 Group: Development/Libraries
 Requires: readline = %{version}
+Requires: libtermcap-devel
 
 %description devel
 The Readline library provides a set of functions that allow users to
@@ -34,6 +40,11 @@ installed. You also need to have the readline package installed.
 %setup -q
 %patch0 -p1 -b .outdated
 %patch1 -p0 -b .readline43-001
+%patch2 -p0 -b .readline43-002
+%patch3 -p0 -b .readline43-003
+%patch4 -p0 -b .readline43-004
+%patch5 -p0 -b .readline43-005
+%patch6 -p1 -b .no_rpath
 
 libtoolize --copy --force
 autoconf || autoconf-2.53
@@ -84,8 +95,17 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
+* Fri Nov 28 2003 Thomas Woerner <twoerner@redhat.com> 4.3-9
+- removed rpath
+
+* Thu Nov  6 2003 Tim Waugh <twaugh@redhat.com> 4.3-8
+- Apply upstream patches (bug #109240 among others).
+
+* Wed Jun 25 2003 Tim Waugh <twaugh@redhat.com>
+- devel package requires libtermcap-devel (bug #98015).
+
 * Wed Jun 25 2003 Tim Waugh <twaugh@redhat.com> 4.3-7
-- Fixed recursion loop (bug #97372).
+- Fixed recursion loop (bug #92372).
 
 * Wed Jun 04 2003 Elliot Lee <sopwith@redhat.com>
 - rebuilt
