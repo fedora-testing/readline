@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines.
 Name: readline
 Version: 4.3
-Release: 11
+Release: 12
 License: GPL
 Group: System Environment/Libraries
 Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.bz2
@@ -14,7 +14,7 @@ Patch5: ftp://ftp.cwru.edu/pub/bash/readline-4.3-patches/readline43-005
 Patch6: readline-4.3-no_rpath.patch
 Prereq: /sbin/install-info /sbin/ldconfig
 Buildroot: %{_tmppath}/%{name}-root
-BuildRequires: sed autoconf
+BuildRequires: sed autoconf libtool
 
 %description
 The Readline library provides a set of functions that allow users to
@@ -95,6 +95,9 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
+* Mon Jun 28 2004 Tim Waugh <twaugh@redhat.com> 4.3-12
+- Build requires libtool (bug #126589).
+
 * Tue Jun 15 2004 Elliot Lee <sopwith@redhat.com>
 - rebuilt
 
