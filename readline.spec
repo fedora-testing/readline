@@ -1,18 +1,17 @@
 Summary: A library for editing typed command lines.
 Name: readline
-Version: 4.2
-Release: 2
+Version: 4.2a
+Release: 3
 License: GPL
 Group: System Environment/Libraries
-Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.gz
+Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.bz2
 Patch0: readline-2.2.1-guard.patch
 Patch1: readline-4.1-outdated.patch
 Patch2: readline-4.2-fixendkey.patch
 Patch3: readline-4.1-booleancase.patch
-Patch4: readline-4.2-cplusplus.patch
 Prereq: /sbin/install-info /sbin/ldconfig
 Buildroot: %{_tmppath}/%{name}-root
-BuildRequires: sed
+BuildRequires: sed autoconf252
 
 %description
 The Readline library provides a set of functions that allow users to
@@ -40,7 +39,12 @@ installed. You also need to have the readline package installed.
 %patch2 -p1 -b .fixendkey
 # XXX don't bother about this
 #%patch3 -p1 -b .booleancase
-%patch4 -p1 -b .c++
+autoconf || autoconf-2.52 
+# Work around autoconf 2.5x being broken
+echo "LIBVERSION=4.2" >configure.new
+cat configure >>configure.new
+mv -f configure.new configure
+chmod 0755 configure
 
 %build
 %configure
@@ -50,17 +54,11 @@ make all shared
 [ "${RPM_BUILD_ROOT}" != "/" ] && rm -rf ${RPM_BUILD_ROOT}
 mkdir -p ${RPM_BUILD_ROOT}%{_libdir}
 
-%makeinstall install install-shared
+%makeinstall
 
 chmod 755 ${RPM_BUILD_ROOT}%{_libdir}/*.so*
 
 { cd ${RPM_BUILD_ROOT}
-  ln -sf libreadline.so.%{version} .%{_libdir}/libreadline.so
-  ln -sf libhistory.so.%{version} .%{_libdir}/libhistory.so
-  ln -sf libreadline.so.%{version} \
-  	.%{_libdir}/libreadline.so.`echo %{version} | sed 's^\..*^^g'`
-  ln -sf libhistory.so.%{version} \
-  	.%{_libdir}/libhistory.so.`echo %{version} | sed 's^\..*^^g'`
   gzip -9nf .%{_infodir}/*.info*
   rm -f .%{_infodir}/dir
 }
@@ -94,6 +92,24 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
+* Mon Mar  4 2002 Bernhard Rosenkraenzer <bero@redhat.com> 4.2a-3
+- Rebuild
+
+* Mon Nov 26 2001 Matt Wilson <msw@redhat.com> 4.2a-2
+- removed the manual symlinking of .so, readline handles this by itself
+- call only %%makeinstall, not %%makeinstall install install-shared as
+  this makes bogus .old files in the buildroot
+
+* Tue Nov 20 2001 Bernhard Rosenkraenzer <bero@redhat.com> 4.2a-1
+- 4.2a
+
+* Tue Oct  2 2001 Bernhard Rosenkraenzer <bero@redhat.com> 4.2-4
+- Work around autoconf bug
+
+* Mon Oct  1 2001 Bernhard Rosenkraenzer <bero@redhat.com> 4.2-3
+- Don't use readline's internal re-implementation of strpbrk on systems
+  that have strpbrk - the system implementation is faster and better maintained.
+
 * Tue Aug  7 2001 Bernhard Rosenkraenzer <bero@redhat.com> 4.2-2
 - Make sure headers can be included from C++ applications (#51131)
   (Patch based on Debian's with the bugs removed ;) )
