@@ -13,6 +13,7 @@ Patch3: ftp://ftp.cwru.edu/pub/bash/readline-5.0-patches/readline50-003
 Patch4: ftp://ftp.cwru.edu/pub/bash/readline-5.0-patches/readline50-004
 Patch5: ftp://ftp.cwru.edu/pub/bash/readline-5.0-patches/readline50-005
 Patch6: readline-4.3-no_rpath.patch
+Patch7: readline-read-e-segfault.patch
 Prereq: /sbin/install-info /sbin/ldconfig
 Buildroot: %{_tmppath}/%{name}-root
 BuildRequires: sed autoconf libtool
@@ -46,6 +47,7 @@ installed. You also need to have the readline package installed.
 %patch4 -p0 -b .004
 %patch5 -p0 -b .005
 %patch6 -p1 -b .no_rpath
+%patch7 -p1 -b .read-e-segfault
 
 libtoolize --copy --force
 autoconf || autoconf-2.53
@@ -96,6 +98,9 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
+* Tue Jan 18 2005 Tim Waugh <twaugh@redhat.com>
+- Apply "read -e" patch from bash package.
+
 * Wed Jan 12 2005 Tim Waugh <twaugh@redhat.com> 5.0-1
 - 5.0 (bug #144835).
 
