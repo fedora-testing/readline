@@ -1,11 +1,15 @@
 Summary: A library for editing typed in command lines.
 Name: readline
 Version: 4.1
-Release: 5
+Release: 5tc1
 Copyright: GPL
+Packager: Red Hat, Inc. <http://bugzilla.redhat.com/bugzilla>
+Vendor: Red Hat, Inc.
 Group: System Environment/Libraries
 Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.gz
 Patch0: readline-2.2.1-guard.patch
+# by CLE
+Patch5: http://kldp.org/~mindgame/unix/hangul/readline/readline-4.1-i18n.patch
 Prereq: /sbin/install-info /sbin/ldconfig
 Prefix: %{_prefix}
 Buildroot: %{_tmppath}/%{name}-root
@@ -37,6 +41,7 @@ need to have the readline package installed.
 %prep
 %setup -q
 %patch0 -p1 -b .guard
+%patch5 -p1 -b .i18n
 
 %build
 %configure
@@ -90,6 +95,9 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
+* Sun Dec 10 2000 Chih-Wei Huang <cwhuang@linux.org.tw>
+- add i18n patch
+
 * Thu Aug 17 2000 Jeff Johnson <jbj@redhat.com>
 - summaries from specspo.
 
