@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines.
 Name: readline
 Version: 4.3
-Release: 3
+Release: 5
 License: GPL
 Group: System Environment/Libraries
 Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.bz2
@@ -13,7 +13,7 @@ Patch4: readline-4.2a-utf8.patch
 Patch5: readline-4.3-oom.patch
 Prereq: /sbin/install-info /sbin/ldconfig
 Buildroot: %{_tmppath}/%{name}-root
-BuildRequires: sed autoconf253
+BuildRequires: sed autoconf
 
 %description
 The Readline library provides a set of functions that allow users to
@@ -99,6 +99,13 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
+* Wed Jan 22 2003 Tim Powers <timp@redhat.com>
+- rebuilt
+
+* Wed Nov 20 2002 Tim Powers <timp@redhat.com>
+- rebuild in current collinst
+- BuildRequires autoconf only
+
 * Wed Aug 07 2002 Phil Knirsch <pknirsch@redhat.com> 4.3-3
 - Fixed Esc-O-M stack overflow bug.
 
