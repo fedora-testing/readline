@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines.
 Name: readline
 Version: 4.3
-Release: 13
+Release: 14
 License: GPL
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
@@ -96,7 +96,7 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
-* Mon Nov 29 2004 Tim Waugh <twaugh@redhat.com>
+* Mon Nov 29 2004 Tim Waugh <twaugh@redhat.com> 4.3-14
 - Added URL tag (bug #141106).
 
 * Thu Sep  2 2004 Jeremy Katz <katzj@redhat.com> - 4.3-13
