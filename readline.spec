@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines.
 Name: readline
 Version: 4.2a
-Release: 3
+Release: 4
 License: GPL
 Group: System Environment/Libraries
 Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.bz2
@@ -11,7 +11,7 @@ Patch2: readline-4.2-fixendkey.patch
 Patch3: readline-4.1-booleancase.patch
 Prereq: /sbin/install-info /sbin/ldconfig
 Buildroot: %{_tmppath}/%{name}-root
-BuildRequires: sed autoconf252
+BuildRequires: sed autoconf253
 
 %description
 The Readline library provides a set of functions that allow users to
@@ -39,7 +39,7 @@ installed. You also need to have the readline package installed.
 %patch2 -p1 -b .fixendkey
 # XXX don't bother about this
 #%patch3 -p1 -b .booleancase
-autoconf || autoconf-2.52 
+autoconf || autoconf-2.53
 # Work around autoconf 2.5x being broken
 echo "LIBVERSION=4.2" >configure.new
 cat configure >>configure.new
@@ -92,6 +92,9 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
+* Wed Mar 20 2002 Trond Eivind Glomsrød <teg@redhat.com> 4.2a-4
+- Use autoconf 2.53, not 2.52
+
 * Mon Mar  4 2002 Bernhard Rosenkraenzer <bero@redhat.com> 4.2a-3
 - Rebuild
 
