@@ -1,15 +1,14 @@
 Summary: A library for editing typed in command lines.
 Name: readline
-Version: 4.1
-Release: 9
+Version: 4.2
+Release: 1
 Copyright: GPL
 Group: System Environment/Libraries
 Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.gz
 Patch0: readline-2.2.1-guard.patch
 Patch1: readline-4.1-outdated.patch
-Patch2: readline-4.1-fixendkey.patch
+Patch2: readline-4.2-fixendkey.patch
 Patch3: readline-4.1-booleancase.patch
-Patch4: readline-4.1-headerpaths.patch
 Prereq: /sbin/install-info /sbin/ldconfig
 Buildroot: %{_tmppath}/%{name}-root
 BuildRequires: sed
@@ -42,8 +41,8 @@ need to have the readline package installed.
 %patch0 -p1 -b .guard
 %patch1 -p1 -b .outdated
 %patch2 -p1 -b .fixendkey
-%patch3 -p1 -b .booleancase
-%patch4 -p1 -b .headerpaths
+# XXX don't bother about this
+#%patch3 -p1 -b .booleancase
 
 %build
 %configure
@@ -97,6 +96,9 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
+* Wed May 09 2001 Florian La Roche <Florian.LaRoche@redhat.de>
+- update to 4.2 and adapt patches
+
 * Fri Apr  6 2001 Nalin Dahyabhai <nalin@redhat.com>
 - change the paths listed for the header files in the man page to reflect
   the location changes from previous versions (#35073)
