@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines.
 Name: readline
 Version: 4.3
-Release: 12
+Release: 13
 License: GPL
 Group: System Environment/Libraries
 Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.bz2
@@ -95,6 +95,10 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
+* Thu Sep  2 2004 Jeremy Katz <katzj@redhat.com> - 4.3-13
+- rebuild so that static linking against readline will work on ppc64 
+  without dot symbols
+
 * Mon Jun 28 2004 Tim Waugh <twaugh@redhat.com> 4.3-12
 - Build requires libtool (bug #126589).
 
