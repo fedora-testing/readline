@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines.
 Name: readline
 Version: 5.0
-Release: 2
+Release: 3
 License: GPL
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
@@ -100,6 +100,9 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
+* Wed Mar  2 2005 Tim Waugh <twaugh@redhat.com> 5.0-3
+- Rebuild for new GCC.
+
 * Tue Jan 18 2005 Tim Waugh <twaugh@redhat.com> 5.0-2
 - Fix line-wrapping (bug #145329).
 - Apply "read -e" patch from bash package.
