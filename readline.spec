@@ -1,26 +1,26 @@
-Summary: A library for editing typed in command lines.
+Summary: A library for editing typed command lines.
 Name: readline
 Version: 4.2
-Release: 1
-Copyright: GPL
+Release: 2
+License: GPL
 Group: System Environment/Libraries
 Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.gz
 Patch0: readline-2.2.1-guard.patch
 Patch1: readline-4.1-outdated.patch
 Patch2: readline-4.2-fixendkey.patch
 Patch3: readline-4.1-booleancase.patch
+Patch4: readline-4.2-cplusplus.patch
 Prereq: /sbin/install-info /sbin/ldconfig
 Buildroot: %{_tmppath}/%{name}-root
 BuildRequires: sed
 
 %description
-The readline library reads a line from the terminal and returns it,
-allowing the user to edit the line with standard emacs editing keys.
-The readline library allows programmers to provide an easy to use and
-more intuitive interface for users.
-
-If you want to develop programs that will use the readline library,
-you'll also need to install the readline-devel package.
+The Readline library provides a set of functions that allow users to
+edit command lines. Both Emacs and vi editing modes are available. The
+Readline library includes additional functions for maintaining a list
+of previously-entered command lines for recalling or editing those
+lines, and for performing csh-like history expansion on previous
+commands.
 
 %package devel
 Summary: Files needed to develop programs which use the readline library.
@@ -28,13 +28,10 @@ Group: Development/Libraries
 Requires: readline = %{version}
 
 %description devel
-The readline library will read a line from the terminal and return it.
-Use of the readline library allows programmers to provide an easy
-to use and more intuitive interface for users.
-
-If you want to develop programs which will use the readline library,
-you'll need to have the readline-devel package installed.  You'll also
-need to have the readline package installed.
+The Readline library provides a set of functions that allow users to
+edit typed command lines. If you want to develop programs that will
+use the readline library, you need to have the readline-devel package
+installed. You also need to have the readline package installed.
 
 %prep
 %setup -q
@@ -43,6 +40,7 @@ need to have the readline package installed.
 %patch2 -p1 -b .fixendkey
 # XXX don't bother about this
 #%patch3 -p1 -b .booleancase
+%patch4 -p1 -b .c++
 
 %build
 %configure
@@ -96,6 +94,10 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
+* Tue Aug  7 2001 Bernhard Rosenkraenzer <bero@redhat.com> 4.2-2
+- Make sure headers can be included from C++ applications (#51131)
+  (Patch based on Debian's with the bugs removed ;) )
+
 * Wed May 09 2001 Florian La Roche <Florian.LaRoche@redhat.de>
 - update to 4.2 and adapt patches
 
