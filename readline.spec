@@ -102,7 +102,6 @@ fi
 %changelog
 * Tue Jan 18 2005 Tim Waugh <twaugh@redhat.com> 5.0-2
 - Fix line-wrapping (bug #145329).
-
 - Apply "read -e" patch from bash package.
 
 * Wed Jan 12 2005 Tim Waugh <twaugh@redhat.com> 5.0-1
