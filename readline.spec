@@ -1,16 +1,12 @@
 Summary: A library for editing typed command lines.
 Name: readline
 Version: 4.3
-Release: 5
+Release: 7
 License: GPL
 Group: System Environment/Libraries
 Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.bz2
-Patch0: readline-2.2.1-guard.patch
-Patch1: readline-4.1-outdated.patch
-Patch2: readline-4.2-fixendkey.patch
-Patch3: readline-4.1-booleancase.patch
-Patch4: readline-4.2a-utf8.patch
-Patch5: readline-4.3-oom.patch
+Patch0: readline-4.1-outdated.patch
+Patch1: ftp://ftp.cwru.edu/pub/bash/readline-4.3-patches/readline43-001
 Prereq: /sbin/install-info /sbin/ldconfig
 Buildroot: %{_tmppath}/%{name}-root
 BuildRequires: sed autoconf
@@ -36,22 +32,11 @@ installed. You also need to have the readline package installed.
 
 %prep
 %setup -q
-#%patch0 -p1 -b .guard
-%patch1 -p1 -b .outdated
-#%patch2 -p1 -b .fixendkey
-# XXX don't bother about this
-#%patch3 -p1 -b .booleancase
-#%patch4 -p1 -b .utf8
-#%patch5 -p1 -b .oom
+%patch0 -p1 -b .outdated
+%patch1 -p0 -b .readline43-001
 
 libtoolize --copy --force
 autoconf || autoconf-2.53
-# Work around autoconf 2.5x being broken
-# Removed after updated to 4.3
-#echo "LIBVERSION=4.2" >configure.new
-#cat configure >>configure.new
-#mv -f configure.new configure
-#chmod 0755 configure
 
 %build
 %configure
@@ -99,6 +84,12 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
+* Wed Jun 25 2003 Tim Waugh <twaugh@redhat.com> 4.3-7
+- Fixed recursion loop (bug #97372).
+
+* Wed Jun 04 2003 Elliot Lee <sopwith@redhat.com>
+- rebuilt
+
 * Wed Jan 22 2003 Tim Powers <timp@redhat.com>
 - rebuilt
 
