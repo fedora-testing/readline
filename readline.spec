@@ -1,17 +1,16 @@
 Summary: A library for editing typed in command lines.
 Name: readline
 Version: 4.1
-Release: 5tc1
+Release: 9
 Copyright: GPL
-Packager: Red Hat, Inc. <http://bugzilla.redhat.com/bugzilla>
-Vendor: Red Hat, Inc.
 Group: System Environment/Libraries
 Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.gz
 Patch0: readline-2.2.1-guard.patch
-# by CLE
-Patch5: http://kldp.org/~mindgame/unix/hangul/readline/readline-4.1-i18n.patch
+Patch1: readline-4.1-outdated.patch
+Patch2: readline-4.1-fixendkey.patch
+Patch3: readline-4.1-booleancase.patch
+Patch4: readline-4.1-headerpaths.patch
 Prereq: /sbin/install-info /sbin/ldconfig
-Prefix: %{_prefix}
 Buildroot: %{_tmppath}/%{name}-root
 BuildRequires: sed
 
@@ -41,7 +40,10 @@ need to have the readline package installed.
 %prep
 %setup -q
 %patch0 -p1 -b .guard
-%patch5 -p1 -b .i18n
+%patch1 -p1 -b .outdated
+%patch2 -p1 -b .fixendkey
+%patch3 -p1 -b .booleancase
+%patch4 -p1 -b .headerpaths
 
 %build
 %configure
@@ -53,7 +55,7 @@ mkdir -p ${RPM_BUILD_ROOT}%{_libdir}
 
 %makeinstall install install-shared
 
-chmod 755 ${RPM_BUILD_ROOT}/%{prefix}/lib/*.so*
+chmod 755 ${RPM_BUILD_ROOT}%{_libdir}/*.so*
 
 { cd ${RPM_BUILD_ROOT}
   ln -sf libreadline.so.%{version} .%{_libdir}/libreadline.so
@@ -95,8 +97,19 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
-* Sun Dec 10 2000 Chih-Wei Huang <cwhuang@linux.org.tw>
-- add i18n patch
+* Fri Apr  6 2001 Nalin Dahyabhai <nalin@redhat.com>
+- change the paths listed for the header files in the man page to reflect
+  the location changes from previous versions (#35073)
+- note that "on" is acceptable instead of "On" in the man page (#21327)
+
+* Thu Mar  8 2001 Preston Brown <pbrown@redhat.com>
+- fix reading of end key termcap value (@7 is correct, was kH) (#30884)
+
+* Tue Jan 30 2001 Nalin Dahyabhai <nalin@redhat.com>
+- mark the man page as currently out-of-date (#25294)
+
+* Thu Sep  7 2000 Jeff Johnson <jbj@redhat.com>
+- FHS packaging (64bit systems need to use libdir).
 
 * Thu Aug 17 2000 Jeff Johnson <jbj@redhat.com>
 - summaries from specspo.
