@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines.
 Name: readline
-Version: 4.2a
-Release: 4
+Version: 4.3
+Release: 2
 License: GPL
 Group: System Environment/Libraries
 Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.bz2
@@ -9,6 +9,8 @@ Patch0: readline-2.2.1-guard.patch
 Patch1: readline-4.1-outdated.patch
 Patch2: readline-4.2-fixendkey.patch
 Patch3: readline-4.1-booleancase.patch
+Patch4: readline-4.2a-utf8.patch
+Patch5: readline-4.3-oom.patch
 Prereq: /sbin/install-info /sbin/ldconfig
 Buildroot: %{_tmppath}/%{name}-root
 BuildRequires: sed autoconf253
@@ -34,17 +36,22 @@ installed. You also need to have the readline package installed.
 
 %prep
 %setup -q
-%patch0 -p1 -b .guard
+#%patch0 -p1 -b .guard
 %patch1 -p1 -b .outdated
-%patch2 -p1 -b .fixendkey
+#%patch2 -p1 -b .fixendkey
 # XXX don't bother about this
 #%patch3 -p1 -b .booleancase
+#%patch4 -p1 -b .utf8
+#%patch5 -p1 -b .utf8
+
+libtoolize --copy --force
 autoconf || autoconf-2.53
 # Work around autoconf 2.5x being broken
-echo "LIBVERSION=4.2" >configure.new
-cat configure >>configure.new
-mv -f configure.new configure
-chmod 0755 configure
+# Removed after updated to 4.3
+#echo "LIBVERSION=4.2" >configure.new
+#cat configure >>configure.new
+#mv -f configure.new configure
+#chmod 0755 configure
 
 %build
 %configure
@@ -92,6 +99,24 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
+* Wed Aug 07 2002 Phil Knirsch <pknirsch@redhat.com> 4.3-2
+- Fixed Esc-O-M stack overflow bug.
+
+* Mon Jul 22 2002 Phil Knirsch <pknirsch@redhat.com> 4.3-1
+- Updated to latest readline release 4.3
+
+* Thu Jul 11 2002 Phil Knirsch <pknirsch@redhat.com> 4.2a-7
+- Fixed problem with alpha build.
+
+* Wed Jul 10 2002 Phil Knirsch <pknirsch@redhat.com>
+- Fixed utf8 problem (originally observed in bash).
+
+* Fri Jun 21 2002 Tim Powers <timp@redhat.com> 4.2a-6
+- automated rebuild
+
+* Thu May 23 2002 Tim Powers <timp@redhat.com> 4.2a-5
+- automated rebuild
+
 * Wed Mar 20 2002 Trond Eivind Glomsrød <teg@redhat.com> 4.2a-4
 - Use autoconf 2.53, not 2.52
 
