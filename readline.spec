@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines.
 Name: readline
 Version: 5.0
-Release: 1
+Release: 2
 License: GPL
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
@@ -14,6 +14,7 @@ Patch4: ftp://ftp.cwru.edu/pub/bash/readline-5.0-patches/readline50-004
 Patch5: ftp://ftp.cwru.edu/pub/bash/readline-5.0-patches/readline50-005
 Patch6: readline-4.3-no_rpath.patch
 Patch7: readline-read-e-segfault.patch
+Patch8: readline-wrap.patch
 Prereq: /sbin/install-info /sbin/ldconfig
 Buildroot: %{_tmppath}/%{name}-root
 BuildRequires: sed autoconf libtool
@@ -48,6 +49,7 @@ installed. You also need to have the readline package installed.
 %patch5 -p0 -b .005
 %patch6 -p1 -b .no_rpath
 %patch7 -p1 -b .read-e-segfault
+%patch8 -p1 -b .wrap
 
 libtoolize --copy --force
 autoconf || autoconf-2.53
@@ -98,7 +100,9 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
-* Tue Jan 18 2005 Tim Waugh <twaugh@redhat.com>
+* Tue Jan 18 2005 Tim Waugh <twaugh@redhat.com> 5.0-2
+- Fix line-wrapping (bug #145329).
+
 - Apply "read -e" patch from bash package.
 
 * Wed Jan 12 2005 Tim Waugh <twaugh@redhat.com> 5.0-1
