@@ -1,17 +1,17 @@
 Summary: A library for editing typed command lines.
 Name: readline
-Version: 4.3
-Release: 14
+Version: 5.0
+Release: 1
 License: GPL
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
-Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.bz2
+Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.gz
 Patch0: readline-4.1-outdated.patch
-Patch1: ftp://ftp.cwru.edu/pub/bash/readline-4.3-patches/readline43-001
-Patch2: ftp://ftp.cwru.edu/pub/bash/readline-4.3-patches/readline43-002
-Patch3: ftp://ftp.cwru.edu/pub/bash/readline-4.3-patches/readline43-003
-Patch4: ftp://ftp.cwru.edu/pub/bash/readline-4.3-patches/readline43-004
-Patch5: ftp://ftp.cwru.edu/pub/bash/readline-4.3-patches/readline43-005
+Patch1: ftp://ftp.cwru.edu/pub/bash/readline-5.0-patches/readline50-001
+Patch2: ftp://ftp.cwru.edu/pub/bash/readline-5.0-patches/readline50-002
+Patch3: ftp://ftp.cwru.edu/pub/bash/readline-5.0-patches/readline50-003
+Patch4: ftp://ftp.cwru.edu/pub/bash/readline-5.0-patches/readline50-004
+Patch5: ftp://ftp.cwru.edu/pub/bash/readline-5.0-patches/readline50-005
 Patch6: readline-4.3-no_rpath.patch
 Prereq: /sbin/install-info /sbin/ldconfig
 Buildroot: %{_tmppath}/%{name}-root
@@ -40,11 +40,11 @@ installed. You also need to have the readline package installed.
 %prep
 %setup -q
 %patch0 -p1 -b .outdated
-%patch1 -p0 -b .readline43-001
-%patch2 -p0 -b .readline43-002
-%patch3 -p0 -b .readline43-003
-%patch4 -p0 -b .readline43-004
-%patch5 -p0 -b .readline43-005
+%patch1 -p0 -b .001
+%patch2 -p0 -b .002
+%patch3 -p0 -b .003
+%patch4 -p0 -b .004
+%patch5 -p0 -b .005
 %patch6 -p1 -b .no_rpath
 
 libtoolize --copy --force
@@ -96,6 +96,9 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
+* Wed Jan 12 2005 Tim Waugh <twaugh@redhat.com> 5.0-1
+- 5.0 (bug #144835).
+
 * Mon Nov 29 2004 Tim Waugh <twaugh@redhat.com> 4.3-14
 - Added URL tag (bug #141106).
 
