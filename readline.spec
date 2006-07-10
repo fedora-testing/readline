@@ -1,19 +1,17 @@
 Summary: A library for editing typed command lines.
 Name: readline
-Version: 5.0
-Release: 3.2.1
+Version: 5.1
+Release: 1
 License: GPL
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
 Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.gz
 Patch0: readline-4.1-outdated.patch
-Patch1: ftp://ftp.cwru.edu/pub/bash/readline-5.0-patches/readline50-001
-Patch2: ftp://ftp.cwru.edu/pub/bash/readline-5.0-patches/readline50-002
-Patch3: ftp://ftp.cwru.edu/pub/bash/readline-5.0-patches/readline50-003
-Patch4: ftp://ftp.cwru.edu/pub/bash/readline-5.0-patches/readline50-004
-Patch5: ftp://ftp.cwru.edu/pub/bash/readline-5.0-patches/readline50-005
+Patch1: ftp://ftp.cwru.edu/pub/bash/readline-5.1-patches/readline51-001
+Patch2: ftp://ftp.cwru.edu/pub/bash/readline-5.1-patches/readline51-002
+Patch3: ftp://ftp.cwru.edu/pub/bash/readline-5.1-patches/readline51-003
+Patch4: ftp://ftp.cwru.edu/pub/bash/readline-5.1-patches/readline51-004
 Patch6: readline-4.3-no_rpath.patch
-Patch7: readline-read-e-segfault.patch
 Patch8: readline-wrap.patch
 Prereq: /sbin/install-info /sbin/ldconfig
 Buildroot: %{_tmppath}/%{name}-root
@@ -46,9 +44,7 @@ installed. You also need to have the readline package installed.
 %patch2 -p0 -b .002
 %patch3 -p0 -b .003
 %patch4 -p0 -b .004
-%patch5 -p0 -b .005
 %patch6 -p1 -b .no_rpath
-%patch7 -p1 -b .read-e-segfault
 %patch8 -p1 -b .wrap
 
 libtoolize --copy --force
@@ -100,6 +96,11 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
+* Mon Jul 10 2006 Jindrich Novy <jnovy@redhat.com> 5.1-1
+- update to readline-5.1
+- apply new proposed upstream patches for 5.1 (001-004)
+- drop "read -e" patch, applied upstream
+
 * Fri Feb 10 2006 Jesse Keating <jkeating@redhat.com> - 5.0-3.2.1
 - bump again for double-long bug on ppc(64)
 
