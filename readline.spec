@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines.
 Name: readline
 Version: 5.1
-Release: 1
+Release: 1.1
 License: GPL
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
@@ -96,6 +96,9 @@ fi
 %{_libdir}/lib*.so
 
 %changelog
+* Wed Jul 12 2006 Jesse Keating <jkeating@redhat.com> - 5.1-1.1
+- rebuild
+
 * Mon Jul 10 2006 Jindrich Novy <jnovy@redhat.com> 5.1-1
 - update to readline-5.1
 - apply new proposed upstream patches for 5.1 (001-004)
