@@ -1,21 +1,15 @@
 Summary: A library for editing typed command lines.
 Name: readline
-Version: 5.1
-Release: 1.1
+Version: 5.2
+Release: 1%{?dist}
 License: GPL
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
 Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.gz
-Patch0: readline-4.1-outdated.patch
-Patch1: ftp://ftp.cwru.edu/pub/bash/readline-5.1-patches/readline51-001
-Patch2: ftp://ftp.cwru.edu/pub/bash/readline-5.1-patches/readline51-002
-Patch3: ftp://ftp.cwru.edu/pub/bash/readline-5.1-patches/readline51-003
-Patch4: ftp://ftp.cwru.edu/pub/bash/readline-5.1-patches/readline51-004
-Patch6: readline-4.3-no_rpath.patch
-Patch8: readline-wrap.patch
-Prereq: /sbin/install-info /sbin/ldconfig
-Buildroot: %{_tmppath}/%{name}-root
-BuildRequires: sed autoconf libtool
+Patch1: readline-5.2-shlib.patch
+Requires(post): /sbin/install-info
+Requires(preun): /sbin/install-info
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description
 The Readline library provides a set of functions that allow users to
@@ -28,8 +22,10 @@ commands.
 %package devel
 Summary: Files needed to develop programs which use the readline library.
 Group: Development/Libraries
-Requires: readline = %{version}
+Requires: %{name} = %{version}-%{release}
 Requires: libtermcap-devel
+Requires(post): /sbin/install-info
+Requires(preun): /sbin/install-info
 
 %description devel
 The Readline library provides a set of functions that allow users to
@@ -39,63 +35,72 @@ installed. You also need to have the readline package installed.
 
 %prep
 %setup -q
-%patch0 -p1 -b .outdated
-%patch1 -p0 -b .001
-%patch2 -p0 -b .002
-%patch3 -p0 -b .003
-%patch4 -p0 -b .004
-%patch6 -p1 -b .no_rpath
-%patch8 -p1 -b .wrap
+%patch1 -p1 -b .shlib
 
-libtoolize --copy --force
-autoconf || autoconf-2.53
+rm -f examples/rlfe/configure
 
 %build
 %configure
 make all shared
 
 %install
-[ "${RPM_BUILD_ROOT}" != "/" ] && rm -rf ${RPM_BUILD_ROOT}
-mkdir -p ${RPM_BUILD_ROOT}%{_libdir}
+rm -rf $RPM_BUILD_ROOT
 
-%makeinstall
+make DESTDIR=$RPM_BUILD_ROOT install
 
-chmod 755 ${RPM_BUILD_ROOT}%{_libdir}/*.so*
+rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
-{ cd ${RPM_BUILD_ROOT}
-  gzip -9nf .%{_infodir}/*.info*
-  rm -f .%{_infodir}/dir
-}
- 
 %clean
-[ "${RPM_BUILD_ROOT}" != "/" ] && rm -rf ${RPM_BUILD_ROOT}
+rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/ldconfig
 /sbin/install-info %{_infodir}/history.info.gz %{_infodir}/dir
-/sbin/install-info %{_infodir}/readline.info.gz %{_infodir}/dir
+/sbin/install-info %{_infodir}/rluserman.info.gz %{_infodir}/dir
+:
 
 %postun -p /sbin/ldconfig
 
 %preun
 if [ $1 = 0 ]; then
    /sbin/install-info --delete %{_infodir}/history.info.gz %{_infodir}/dir
+   /sbin/install-info --delete %{_infodir}/rluserman.info.gz %{_infodir}/dir
+fi
+:
+
+%post devel
+/sbin/install-info %{_infodir}/readline.info.gz %{_infodir}/dir
+:
+
+%preun devel
+if [ $1 = 0 ]; then
    /sbin/install-info --delete %{_infodir}/readline.info.gz %{_infodir}/dir
 fi
+:
 
 %files
 %defattr(-,root,root)
-%{_mandir}/man*/*
-%{_infodir}/*.info*
+%doc CHANGES COPYING NEWS README USAGE
 %{_libdir}/lib*.so.*
+%{_infodir}/history.info*
+%{_infodir}/rluserman.info*
 
 %files devel
 %defattr(-,root,root)
+%doc examples/*.c examples/*.h examples/rlfe
 %{_includedir}/readline
 %{_libdir}/lib*.a
 %{_libdir}/lib*.so
+%{_mandir}/man3/*
+%{_infodir}/readline.info*
 
 %changelog
+* Mon Nov 13 2006 Miroslav Lichvar <mlichvar@redhat.com> 5.2-1
+- update to 5.2 (#213795)
+- use CFLAGS when linking (#199374)
+- package docs and examples (#172497)
+- spec cleanup
+
 * Wed Jul 12 2006 Jesse Keating <jkeating@redhat.com> - 5.1-1.1
 - rebuild
 

@@ -1,0 +1,25 @@
+--- readline-5.2/support/shlib-install.shlib	2006-01-03 20:06:27.000000000 +0100
++++ readline-5.2/support/shlib-install	2006-11-13 13:51:02.000000000 +0100
+@@ -71,7 +71,7 @@
+ case "$host_os" in
+ hpux*|darwin*|macosx*|linux*)
+ 	if [ -z "$uninstall" ]; then
+-		chmod 555 ${INSTALLDIR}/${LIBNAME}
++		chmod 755 ${INSTALLDIR}/${LIBNAME}
+ 	fi ;;
+ cygwin*)
+ 	IMPLIBNAME=`echo ${LIBNAME} \
+--- readline-5.2/support/shobj-conf.shlib	2006-04-11 15:15:43.000000000 +0200
++++ readline-5.2/support/shobj-conf	2006-11-13 13:55:30.000000000 +0100
+@@ -108,9 +108,9 @@
+ linux*-*|gnu*-*|k*bsd*-gnu-*)
+ 	SHOBJ_CFLAGS=-fPIC
+ 	SHOBJ_LD='${CC}'
+-	SHOBJ_LDFLAGS='-shared -Wl,-soname,$@'
++	SHOBJ_LDFLAGS='$(CFLAGS) -shared -Wl,-soname,$@'
+ 
+-	SHLIB_XLDFLAGS='-Wl,-rpath,$(libdir) -Wl,-soname,`basename $@ $(SHLIB_MINOR)`'
++	SHLIB_XLDFLAGS='-Wl,-soname,`basename $@ $(SHLIB_MINOR)`'
+ 	SHLIB_LIBVERSION='$(SHLIB_LIBSUFF).$(SHLIB_MAJOR)$(SHLIB_MINOR)'
+ 	;;
+ 
