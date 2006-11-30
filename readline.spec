@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines.
 Name: readline
 Version: 5.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPL
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
@@ -9,6 +9,7 @@ Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.gz
 Patch1: readline-5.2-shlib.patch
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
+BuildRequires: ncurses-devel
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description
@@ -23,7 +24,7 @@ commands.
 Summary: Files needed to develop programs which use the readline library.
 Group: Development/Libraries
 Requires: %{name} = %{version}-%{release}
-Requires: libtermcap-devel
+Requires: ncurses-devel
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 
@@ -40,6 +41,7 @@ installed. You also need to have the readline package installed.
 rm -f examples/rlfe/configure
 
 %build
+export CPPFLAGS="-I/usr/include/ncurses"
 %configure
 make all shared
 
@@ -95,6 +97,9 @@ fi
 %{_infodir}/readline.info*
 
 %changelog
+* Thu Nov 30 2006 Miroslav Lichvar <mlichvar@redhat.com> 5.2-2
+- require ncurses-devel instead of libtermcap-devel
+
 * Mon Nov 13 2006 Miroslav Lichvar <mlichvar@redhat.com> 5.2-1
 - update to 5.2 (#213795)
 - use CFLAGS when linking (#199374)
