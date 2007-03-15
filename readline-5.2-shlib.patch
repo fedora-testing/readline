@@ -10,8 +10,8 @@
  cygwin*)
  	IMPLIBNAME=`echo ${LIBNAME} \
 --- readline-5.2/support/shobj-conf.shlib	2006-04-11 15:15:43.000000000 +0200
-+++ readline-5.2/support/shobj-conf	2006-11-13 13:55:30.000000000 +0100
-@@ -108,9 +108,9 @@
++++ readline-5.2/support/shobj-conf	2007-03-15 14:11:36.000000000 +0100
+@@ -108,10 +108,11 @@
  linux*-*|gnu*-*|k*bsd*-gnu-*)
  	SHOBJ_CFLAGS=-fPIC
  	SHOBJ_LD='${CC}'
@@ -21,5 +21,7 @@
 -	SHLIB_XLDFLAGS='-Wl,-rpath,$(libdir) -Wl,-soname,`basename $@ $(SHLIB_MINOR)`'
 +	SHLIB_XLDFLAGS='-Wl,-soname,`basename $@ $(SHLIB_MINOR)`'
  	SHLIB_LIBVERSION='$(SHLIB_LIBSUFF).$(SHLIB_MAJOR)$(SHLIB_MINOR)'
++	SHLIB_LIBS='-ltinfo'
  	;;
  
+ freebsd2* | netbsd*)

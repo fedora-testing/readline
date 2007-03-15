@@ -1,12 +1,13 @@
-Summary: A library for editing typed command lines.
+Summary: A library for editing typed command lines
 Name: readline
 Version: 5.2
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPL
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
 Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.gz
 Patch1: readline-5.2-shlib.patch
+Patch2: readline-5.2-001.patch
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 BuildRequires: ncurses-devel
@@ -21,7 +22,7 @@ lines, and for performing csh-like history expansion on previous
 commands.
 
 %package devel
-Summary: Files needed to develop programs which use the readline library.
+Summary: Files needed to develop programs which use the readline library
 Group: Development/Libraries
 Requires: %{name} = %{version}-%{release}
 Requires: ncurses-devel
@@ -34,16 +35,26 @@ edit typed command lines. If you want to develop programs that will
 use the readline library, you need to have the readline-devel package
 installed. You also need to have the readline package installed.
 
+%package static
+Summary: Static libraries for the readline library
+Group: Development/Libraries
+Requires: %{name}-devel = %{version}-%{release}
+
+%description static
+The readline-static package contains the static version of the readline
+library.
+
 %prep
 %setup -q
 %patch1 -p1 -b .shlib
+%patch2 -p0 -b .001
 
 rm -f examples/rlfe/configure
 
 %build
 export CPPFLAGS="-I/usr/include/ncurses"
 %configure
-make all shared
+make %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -91,12 +102,20 @@ fi
 %defattr(-,root,root)
 %doc examples/*.c examples/*.h examples/rlfe
 %{_includedir}/readline
-%{_libdir}/lib*.a
 %{_libdir}/lib*.so
 %{_mandir}/man3/*
 %{_infodir}/readline.info*
 
+%files static
+%defattr(-,root,root)
+%{_libdir}/lib*.a
+
 %changelog
+* Thu Mar 15 2007 Miroslav Lichvar <mlichvar@redhat.com> 5.2-3
+- link libreadline with libtinfo (#232277)
+- include upstream 5.2-001 patch
+- move static libraries to -static subpackage, spec cleanup
+
 * Thu Nov 30 2006 Miroslav Lichvar <mlichvar@redhat.com> 5.2-2
 - require ncurses-devel instead of libtermcap-devel
 
@@ -192,7 +211,7 @@ fi
 * Thu May 23 2002 Tim Powers <timp@redhat.com> 4.2a-5
 - automated rebuild
 
-* Wed Mar 20 2002 Trond Eivind Glomsrød <teg@redhat.com> 4.2a-4
+* Wed Mar 20 2002 Trond Eivind GlomsrÃ¸d <teg@redhat.com> 4.2a-4
 - Use autoconf 2.53, not 2.52
 
 * Mon Mar  4 2002 Bernhard Rosenkraenzer <bero@redhat.com> 4.2a-3
