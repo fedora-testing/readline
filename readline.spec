@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines
 Name: readline
 Version: 5.2
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: GPL
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
@@ -9,6 +9,8 @@ Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.gz
 Patch1: readline-5.2-shlib.patch
 Patch2: readline-5.2-001.patch
 Patch3: readline-5.2-002.patch
+Patch4: readline-5.2-003.patch
+Patch5: readline-5.2-004.patch
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 BuildRequires: ncurses-devel
@@ -50,6 +52,8 @@ library.
 %patch1 -p1 -b .shlib
 %patch2 -p0 -b .001
 %patch3 -p0 -b .002
+%patch4 -p0 -b .003
+%patch5 -p0 -b .004
 
 rm -f examples/rlfe/configure
 
@@ -113,6 +117,9 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
+* Tue May 29 2007 Miroslav Lichvar <mlichvar@redhat.com> 5.2-5
+- include patches 5.2-003, 5.2-004
+
 * Thu Mar 22 2007 Miroslav Lichvar <mlichvar@redhat.com> 5.2-4
 - apply 5.2-002 patch
 
