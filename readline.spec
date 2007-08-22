@@ -1,8 +1,8 @@
 Summary: A library for editing typed command lines
 Name: readline
 Version: 5.2
-Release: 5%{?dist}
-License: GPL
+Release: 6%{?dist}
+License: GPLv2+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
 Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.gz
@@ -117,6 +117,9 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
+* Wed Aug 22 2007 Miroslav Lichvar <mlichvar@redhat.com> 5.2-6
+- update license tag
+
 * Tue May 29 2007 Miroslav Lichvar <mlichvar@redhat.com> 5.2-5
 - include patches 5.2-003, 5.2-004
 
