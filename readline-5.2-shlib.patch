@@ -25,3 +25,14 @@
  	;;
  
  freebsd2* | netbsd*)
+--- readline-5.2/shlib/Makefile.in.shlib	2005-08-12 05:56:10.000000000 +0200
++++ readline-5.2/shlib/Makefile.in	2007-11-05 18:59:14.000000000 +0100
+@@ -168,7 +168,7 @@ $(SHARED_READLINE):	$(SHARED_OBJ)
+ 
+ $(SHARED_HISTORY):	$(SHARED_HISTOBJ) xmalloc.so
+ 	$(RM) $@
+-	$(SHOBJ_LD) ${SHOBJ_LDFLAGS} ${SHLIB_XLDFLAGS} -o $@ $(SHARED_HISTOBJ) xmalloc.so $(SHLIB_LIBS)
++	$(SHOBJ_LD) ${SHOBJ_LDFLAGS} ${SHLIB_XLDFLAGS} -o $@ $(SHARED_HISTOBJ) xmalloc.so
+ 
+ # Since tilde.c is shared between readline and bash, make sure we compile 
+ # it with the right flags when it's built as part of readline

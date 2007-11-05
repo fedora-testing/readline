@@ -1,11 +1,11 @@
 Summary: A library for editing typed command lines
 Name: readline
 Version: 5.2
-Release: 7%{?dist}
+Release: 8%{?dist}
 License: GPLv2+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
-Source: ftp://ftp.gnu.org/gnu/readline-%{version}.tar.gz
+Source: ftp://ftp.gnu.org/gnu/readline/readline-%{version}.tar.gz
 Patch1: readline-5.2-shlib.patch
 Patch2: readline-5.2-001.patch
 Patch3: readline-5.2-002.patch
@@ -14,6 +14,7 @@ Patch5: readline-5.2-004.patch
 Patch6: readline-5.2-005.patch
 Patch7: readline-5.2-006.patch
 Patch8: readline-5.2-007.patch
+Patch9: readline-5.2-inv.patch
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 BuildRequires: ncurses-devel
@@ -60,11 +61,17 @@ library.
 %patch6 -p0 -b .005
 %patch7 -p0 -b .006
 %patch8 -p0 -b .007
+%patch9 -p1 -b .inv
 
-rm -f examples/rlfe/configure
+pushd examples
+rm -f rlfe/configure
+iconv -f iso8859-1 -t utf8 -o rl-fgets.c{_,}
+touch -r rl-fgets.c{,_}
+mv -f rl-fgets.c{_,}
+popd
 
 %build
-export CPPFLAGS="-I/usr/include/ncurses"
+export CPPFLAGS="-I%{_includedir}/ncurses"
 %configure
 make %{?_smp_mflags}
 
@@ -104,14 +111,14 @@ fi
 :
 
 %files
-%defattr(-,root,root)
+%defattr(-,root,root,-)
 %doc CHANGES COPYING NEWS README USAGE
 %{_libdir}/lib*.so.*
 %{_infodir}/history.info*
 %{_infodir}/rluserman.info*
 
 %files devel
-%defattr(-,root,root)
+%defattr(-,root,root,-)
 %doc examples/*.c examples/*.h examples/rlfe
 %{_includedir}/readline
 %{_libdir}/lib*.so
@@ -119,10 +126,15 @@ fi
 %{_infodir}/readline.info*
 
 %files static
-%defattr(-,root,root)
+%defattr(-,root,root,-)
 %{_libdir}/lib*.a
 
 %changelog
+* Mon Nov 05 2007 Miroslav Lichvar <mlichvar@redhat.com> 5.2-8
+- fix cursor position when prompt has one invisible character (#358231)
+- merge review fixes (#226361)
+- fix source URL
+
 * Mon Aug 27 2007 Miroslav Lichvar <mlichvar@redhat.com> 5.2-7
 - include patches 005, 006, 007
 
