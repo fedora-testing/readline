@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines
 Name: readline
 Version: 5.2
-Release: 8%{?dist}
+Release: 9%{?dist}
 License: GPLv2+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
@@ -14,7 +14,10 @@ Patch5: readline-5.2-004.patch
 Patch6: readline-5.2-005.patch
 Patch7: readline-5.2-006.patch
 Patch8: readline-5.2-007.patch
-Patch9: readline-5.2-inv.patch
+Patch9: readline-5.2-008.patch
+Patch10: readline-5.2-009.patch
+Patch11: readline-5.2-010.patch
+Patch12: readline-5.2-011.patch
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 BuildRequires: ncurses-devel
@@ -61,7 +64,10 @@ library.
 %patch6 -p0 -b .005
 %patch7 -p0 -b .006
 %patch8 -p0 -b .007
-%patch9 -p1 -b .inv
+%patch9 -p0 -b .008
+%patch10 -p0 -b .009
+%patch11 -p0 -b .010
+%patch12 -p0 -b .011
 
 pushd examples
 rm -f rlfe/configure
@@ -130,6 +136,9 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
+* Thu Jan 03 2008 Miroslav Lichvar <mlichvar@redhat.com> 5.2-9
+- include upstream patches 008-011
+
 * Mon Nov 05 2007 Miroslav Lichvar <mlichvar@redhat.com> 5.2-8
 - fix cursor position when prompt has one invisible character (#358231)
 - merge review fixes (#226361)
