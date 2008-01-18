@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines
 Name: readline
 Version: 5.2
-Release: 9%{?dist}
+Release: 10%{?dist}
 License: GPLv2+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
@@ -86,6 +86,13 @@ rm -rf $RPM_BUILD_ROOT
 
 make DESTDIR=$RPM_BUILD_ROOT install
 
+mkdir $RPM_BUILD_ROOT/%{_lib}
+mv $RPM_BUILD_ROOT%{_libdir}/libreadline.so.* $RPM_BUILD_ROOT/%{_lib}
+for l in $RPM_BUILD_ROOT%{_libdir}/libreadline.so; do
+    ln -sf $(echo %{_libdir} | \
+        sed 's,\(^/\|\)[^/][^/]*,..,g')/%{_lib}/$(readlink $l) $l
+done
+
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
 %clean
@@ -119,7 +126,8 @@ fi
 %files
 %defattr(-,root,root,-)
 %doc CHANGES COPYING NEWS README USAGE
-%{_libdir}/lib*.so.*
+/%{_lib}/libreadline*.so.*
+%{_libdir}/libhistory*.so.*
 %{_infodir}/history.info*
 %{_infodir}/rluserman.info*
 
@@ -136,6 +144,9 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
+* Fri Jan 18 2008 Miroslav Lichvar <mlichvar@redhat.com> 5.2-10
+- move libreadline to /lib
+
 * Thu Jan 03 2008 Miroslav Lichvar <mlichvar@redhat.com> 5.2-9
 - include upstream patches 008-011
 
