@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines
 Name: readline
 Version: 5.2
-Release: 10%{?dist}
+Release: 11%{?dist}
 License: GPLv2+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
@@ -144,6 +144,9 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
+* Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 5.2-11
+- Autorebuild for GCC 4.3
+
 * Fri Jan 18 2008 Miroslav Lichvar <mlichvar@redhat.com> 5.2-10
 - move libreadline to /lib
 
