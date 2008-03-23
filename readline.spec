@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines
 Name: readline
 Version: 5.2
-Release: 11%{?dist}
+Release: 12%{?dist}
 License: GPLv2+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
@@ -18,6 +18,7 @@ Patch9: readline-5.2-008.patch
 Patch10: readline-5.2-009.patch
 Patch11: readline-5.2-010.patch
 Patch12: readline-5.2-011.patch
+Patch13: readline-5.2-redisplay-sigint.patch
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 BuildRequires: ncurses-devel
@@ -68,6 +69,7 @@ library.
 %patch10 -p0 -b .009
 %patch11 -p0 -b .010
 %patch12 -p0 -b .011
+%patch13 -p1 -b .redisplay-sigint
 
 pushd examples
 rm -f rlfe/configure
@@ -144,6 +146,9 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
+* Sun Mar 23 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 5.2-12
+- Fix excessive prompts on CTRL-C abort while the prompt is being printed.
+
 * Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 5.2-11
 - Autorebuild for GCC 4.3
 
