@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines
 Name: readline
 Version: 5.2
-Release: 12%{?dist}
+Release: 13%{?dist}
 License: GPLv2+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
@@ -146,7 +146,10 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
-* Sun Mar 23 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 5.2-12
+* Sun Mar 23 2008 Jan Kratochvil <jan.kratochvil@redhat.com> - 5.2-13
+- Fix the previous %%changelog entry authorship.
+
+* Sun Mar 23 2008 Jan Kratochvil <jan.kratochvil@redhat.com> - 5.2-12
 - Fix excessive prompts on CTRL-C abort while the prompt is being printed.
 
 * Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 5.2-11
