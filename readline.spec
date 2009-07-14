@@ -1,24 +1,16 @@
 Summary: A library for editing typed command lines
 Name: readline
-Version: 5.2
-Release: 14%{?dist}
-License: GPLv2+
+Version: 6.0
+Release: 1%{?dist}
+License: GPLv3+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
 Source: ftp://ftp.gnu.org/gnu/readline/readline-%{version}.tar.gz
-Patch1: readline-5.2-shlib.patch
-Patch2: readline-5.2-001.patch
-Patch3: readline-5.2-002.patch
-Patch4: readline-5.2-003.patch
-Patch5: readline-5.2-004.patch
-Patch6: readline-5.2-005.patch
-Patch7: readline-5.2-006.patch
-Patch8: readline-5.2-007.patch
-Patch9: readline-5.2-008.patch
-Patch10: readline-5.2-009.patch
-Patch11: readline-5.2-010.patch
-Patch12: readline-5.2-011.patch
-Patch13: readline-5.2-redisplay-sigint.patch
+Patch1: ftp://ftp.gnu.org/gnu/readline/readline-6.0-patches/readline60-001
+Patch2: ftp://ftp.gnu.org/gnu/readline/readline-6.0-patches/readline60-002
+Patch3: ftp://ftp.gnu.org/gnu/readline/readline-6.0-patches/readline60-003
+# fix file permissions, remove RPATH, use CFLAGS
+Patch20: readline-6.0-shlib.patch
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 BuildRequires: ncurses-devel
@@ -57,19 +49,10 @@ library.
 
 %prep
 %setup -q
-%patch1 -p1 -b .shlib
-%patch2 -p0 -b .001
-%patch3 -p0 -b .002
-%patch4 -p0 -b .003
-%patch5 -p0 -b .004
-%patch6 -p0 -b .005
-%patch7 -p0 -b .006
-%patch8 -p0 -b .007
-%patch9 -p0 -b .008
-%patch10 -p0 -b .009
-%patch11 -p0 -b .010
-%patch12 -p0 -b .011
-%patch13 -p1 -b .redisplay-sigint
+%patch1 -p0 -b .001
+%patch2 -p0 -b .002
+%patch3 -p0 -b .003
+%patch20 -p1 -b .shlib
 
 pushd examples
 rm -f rlfe/configure
@@ -95,6 +78,7 @@ for l in $RPM_BUILD_ROOT%{_libdir}/libreadline.so; do
         sed 's,\(^/\|\)[^/][^/]*,..,g')/%{_lib}/$(readlink $l) $l
 done
 
+rm -rf $RPM_BUILD_ROOT%{_datadir}/readline
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
 %clean
@@ -146,6 +130,10 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
+* Tue Jul 14 2009 Miroslav Lichvar <mlichvar@redhat.com> 6.0-1
+- update to 6.0
+- include patches 001, 002, 003
+
 * Wed Feb 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.2-14
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
 
