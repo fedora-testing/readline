@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines
 Name: readline
 Version: 6.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv3+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
@@ -9,6 +9,7 @@ Source: ftp://ftp.gnu.org/gnu/readline/readline-%{version}.tar.gz
 Patch1: ftp://ftp.gnu.org/gnu/readline/readline-6.0-patches/readline60-001
 Patch2: ftp://ftp.gnu.org/gnu/readline/readline-6.0-patches/readline60-002
 Patch3: ftp://ftp.gnu.org/gnu/readline/readline-6.0-patches/readline60-003
+Patch4: ftp://ftp.gnu.org/gnu/readline/readline-6.0-patches/readline60-004
 # fix file permissions, remove RPATH, use CFLAGS
 Patch20: readline-6.0-shlib.patch
 Requires(post): /sbin/install-info
@@ -52,6 +53,7 @@ library.
 %patch1 -p0 -b .001
 %patch2 -p0 -b .002
 %patch3 -p0 -b .003
+%patch4 -p0 -b .004
 %patch20 -p1 -b .shlib
 
 pushd examples
@@ -79,33 +81,33 @@ for l in $RPM_BUILD_ROOT%{_libdir}/libreadline.so; do
 done
 
 rm -rf $RPM_BUILD_ROOT%{_datadir}/readline
-rm -f $RPM_BUILD_ROOT%{_infodir}/dir
+rm -f $RPM_BUILD_ROOT%{_infodir}/dir*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/ldconfig
-/sbin/install-info %{_infodir}/history.info.gz %{_infodir}/dir
-/sbin/install-info %{_infodir}/rluserman.info.gz %{_infodir}/dir
+/sbin/install-info %{_infodir}/history.info.gz %{_infodir}/dir &> /dev/null
+/sbin/install-info %{_infodir}/rluserman.info.gz %{_infodir}/dir &> /dev/null
 :
 
 %postun -p /sbin/ldconfig
 
 %preun
 if [ $1 = 0 ]; then
-   /sbin/install-info --delete %{_infodir}/history.info.gz %{_infodir}/dir
-   /sbin/install-info --delete %{_infodir}/rluserman.info.gz %{_infodir}/dir
+   /sbin/install-info --delete %{_infodir}/history.info.gz %{_infodir}/dir &> /dev/null
+   /sbin/install-info --delete %{_infodir}/rluserman.info.gz %{_infodir}/dir &> /dev/null
 fi
 :
 
 %post devel
-/sbin/install-info %{_infodir}/readline.info.gz %{_infodir}/dir
+/sbin/install-info %{_infodir}/readline.info.gz %{_infodir}/dir &> /dev/null
 :
 
 %preun devel
 if [ $1 = 0 ]; then
-   /sbin/install-info --delete %{_infodir}/readline.info.gz %{_infodir}/dir
+   /sbin/install-info --delete %{_infodir}/readline.info.gz %{_infodir}/dir &> /dev/null
 fi
 :
 
@@ -130,6 +132,11 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
+* Tue Aug 25 2009 Miroslav Lichvar <mlichvar@redhat.com> 6.0-3
+- include patch 004
+- suppress install-info errors (#515910)
+- remove dir* in infodir after install (#492097)
+
 * Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 6.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
