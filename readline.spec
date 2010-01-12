@@ -1,17 +1,13 @@
 Summary: A library for editing typed command lines
 Name: readline
-Version: 6.0
-Release: 3%{?dist}
+Version: 6.1
+Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
 Source: ftp://ftp.gnu.org/gnu/readline/readline-%{version}.tar.gz
-Patch1: ftp://ftp.gnu.org/gnu/readline/readline-6.0-patches/readline60-001
-Patch2: ftp://ftp.gnu.org/gnu/readline/readline-6.0-patches/readline60-002
-Patch3: ftp://ftp.gnu.org/gnu/readline/readline-6.0-patches/readline60-003
-Patch4: ftp://ftp.gnu.org/gnu/readline/readline-6.0-patches/readline60-004
 # fix file permissions, remove RPATH, use CFLAGS
-Patch20: readline-6.0-shlib.patch
+Patch20: readline-6.1-shlib.patch
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 BuildRequires: ncurses-devel
@@ -50,10 +46,6 @@ library.
 
 %prep
 %setup -q
-%patch1 -p0 -b .001
-%patch2 -p0 -b .002
-%patch3 -p0 -b .003
-%patch4 -p0 -b .004
 %patch20 -p1 -b .shlib
 
 pushd examples
@@ -132,6 +124,9 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
+* Tue Jan 12 2010 Miroslav Lichvar <mlichvar@redhat.com> 6.1-1
+- update to 6.1
+
 * Tue Aug 25 2009 Miroslav Lichvar <mlichvar@redhat.com> 6.0-3
 - include patch 004
 - suppress install-info errors (#515910)
