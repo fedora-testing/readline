@@ -1,11 +1,13 @@
 Summary: A library for editing typed command lines
 Name: readline
 Version: 6.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv3+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
 Source: ftp://ftp.gnu.org/gnu/readline/readline-%{version}.tar.gz
+# sent upstream
+Patch0: readline-6.1-version.patch
 # fix file permissions, remove RPATH, use CFLAGS
 Patch20: readline-6.1-shlib.patch
 Requires(post): /sbin/install-info
@@ -46,6 +48,7 @@ library.
 
 %prep
 %setup -q
+%patch0 -p1 -b .version
 %patch20 -p1 -b .shlib
 
 pushd examples
@@ -124,6 +127,9 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
+* Wed Feb 17 2010 Lubomir Rintel <lkundrak@v3.sk> 6.1-2
+- fix the version number in header
+
 * Tue Jan 12 2010 Miroslav Lichvar <mlichvar@redhat.com> 6.1-1
 - update to 6.1
 
