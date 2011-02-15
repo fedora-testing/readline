@@ -1,16 +1,13 @@
 Summary: A library for editing typed command lines
 Name: readline
-Version: 6.1
-Release: 4%{?dist}
+Version: 6.2
+Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
 Source: ftp://ftp.gnu.org/gnu/readline/readline-%{version}.tar.gz
-# upstream patches
-Patch1: readline61-001
-Patch2: readline61-002
 # fix file permissions, remove RPATH, use CFLAGS
-Patch20: readline-6.1-shlib.patch
+Patch20: readline-6.2-shlib.patch
 # add TTY input audit support
 Patch21: readline-6.1-audit.patch
 Requires(post): /sbin/install-info
@@ -51,8 +48,6 @@ library.
 
 %prep
 %setup -q
-%patch1 -p0
-%patch2 -p0
 %patch20 -p1 -b .shlib
 %patch21 -p1 -b .audit
 
@@ -132,6 +127,9 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
+* Tue Feb 15 2011 Miroslav Lichvar <mlichvar@redhat.com> 6.2-1
+- update to 6.2
+
 * Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 6.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
