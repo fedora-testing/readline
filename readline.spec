@@ -1,11 +1,13 @@
 Summary: A library for editing typed command lines
 Name: readline
 Version: 6.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv3+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
 Source: ftp://ftp.gnu.org/gnu/readline/readline-%{version}.tar.gz
+# upstream patches
+Patch1: ftp://ftp.cwru.edu/pub/bash/readline-6.2-patches/readline62-001
 # fix file permissions, remove RPATH, use CFLAGS
 Patch20: readline-6.2-shlib.patch
 # add TTY input audit support
@@ -48,6 +50,7 @@ library.
 
 %prep
 %setup -q
+%patch1 -p0
 %patch20 -p1 -b .shlib
 %patch21 -p1 -b .audit
 
@@ -127,6 +130,9 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
+* Tue Mar 01 2011 Miroslav Lichvar <mlichvar@redhat.com> 6.2-2
+- include patch 001
+
 * Tue Feb 15 2011 Miroslav Lichvar <mlichvar@redhat.com> 6.2-1
 - update to 6.2
 
