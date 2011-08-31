@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines
 Name: readline
 Version: 6.2
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv3+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
@@ -12,6 +12,8 @@ Patch1: ftp://ftp.cwru.edu/pub/bash/readline-6.2-patches/readline62-001
 Patch20: readline-6.2-shlib.patch
 # add TTY input audit support
 Patch21: readline-6.1-audit.patch
+# isxdigit should not be defined as macro
+Patch22:  readline-6.2-cppmacro.patch
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 BuildRequires: ncurses-devel
@@ -53,6 +55,7 @@ library.
 %patch1 -p0
 %patch20 -p1 -b .shlib
 %patch21 -p1 -b .audit
+%patch22 -p1 -b .cppmacro
 
 pushd examples
 rm -f rlfe/configure
@@ -130,6 +133,9 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
+* Wed Aug 31 2011 Lukas Nykryn <lnykryn@redhat.com> 6.2-3
+- isxdigit is no longer defined as macro ic c++ (#723299)
+
 * Tue Mar 01 2011 Miroslav Lichvar <mlichvar@redhat.com> 6.2-2
 - include patch 001
 
