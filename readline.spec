@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines
 Name: readline
 Version: 6.2
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: GPLv3+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
@@ -137,6 +137,9 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
+* Sat Jul 21 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 6.2-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Wed Jan 11 2012 Lukas Nykryn <lnykryn@redhat.com> 6.2-4
 - temporary fix for problem with gdb, wait for y/n (#701131)
 
