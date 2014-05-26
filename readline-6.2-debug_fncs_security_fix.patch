@@ -1,0 +1,29 @@
+From 0597f0b34a0c93578b83f24ecca9e66d183728c5 Mon Sep 17 00:00:00 2001
+From: jchaloup <jchaloup@redhat.com>
+Date: Mon, 26 May 2014 13:02:02 +0200
+Subject: [PATCH] security fix for debug functions
+
+---
+ util.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/util.c b/util.c
+index 6c68ad8..bc50dc1 100644
+--- a/util.c
++++ b/util.c
+@@ -468,6 +468,7 @@ _rl_savestring (s)
+   return (strcpy ((char *)xmalloc (1 + (int)strlen (s)), (s)));
+ }
+ 
++#if defined (DEBUG)
+ #if defined (USE_VARARGS)
+ static FILE *_rl_tracefp;
+ 
+@@ -524,3 +525,4 @@ _rl_trclose ()
+ }
+ 
+ #endif
++#endif /* DEBUG */
+-- 
+1.9.0
+
