@@ -1,29 +1,22 @@
 Summary: A library for editing typed command lines
 Name: readline
-Version: 6.2
-Release: 10%{?dist}
+Version: 6.3
+Release: 1%{?dist}
 License: GPLv3+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
 Source: ftp://ftp.gnu.org/gnu/readline/readline-%{version}.tar.gz
-# upstream patches
-Patch1: ftp://ftp.cwru.edu/pub/bash/readline-6.2-patches/readline62-001
-# fix file permissions, remove RPATH, use CFLAGS
-Patch20: readline-6.2-shlib.patch
-# add TTY input audit support
-Patch21: readline-6.1-audit.patch
-# isxdigit should not be defined as macro
-Patch22:  readline-6.2-cppmacro.patch
-# add workaround for problem in gdb
-# in new version of readline needs to be deleted
-Patch23:  readline-6.2-gdb.patch
-#temporary fix build on 64b ARM
-Patch24: readline-aarch64.patch
-# BZ1077026, security fix for temporary file
-Patch25: readline-6.2-debug_fncs_security_fix.patch
+
+Patch1: 0001-upstream-patches.patch
+Patch2: 0002-fix-file-permissions-remove-RPATH-use-CFLAGS.patch
+Patch3: 0003-add-TTY-input-audit-support.patch
+Patch4: 0004-add-workaround-for-problem-in-gdb.patch
+Patch5: 0005-readline6.3upstreampatches1-6.patch
+
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 BuildRequires: ncurses-devel
+BuildRequires: git
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description
@@ -58,14 +51,7 @@ The readline-static package contains the static version of the readline
 library.
 
 %prep
-%setup -q
-%patch1 -p0
-%patch20 -p1 -b .shlib
-%patch21 -p1 -b .audit
-%patch22 -p1 -b .cppmacro
-%patch23 -p1 -b .gdb
-%patch24 -p1 -b .arm
-%patch25 -p1 -b .debug_fncs_security_fix
+%autosetup -S git
 
 pushd examples
 rm -f rlfe/configure
@@ -143,6 +129,10 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
+* Thu Jun 19 2014 Jan Chaloupka <jchaloup@redhat.com> - 6.3-1
+- resolves: #1071336
+  rebase 6.3
+
 * Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 6.2-10
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
