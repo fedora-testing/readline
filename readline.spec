@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines
 Name: readline
 Version: 6.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv3+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
@@ -129,6 +129,11 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
+* Wed Jul  2 2014 Paul Howarth <paul@city-fan.org> - 6.3-2
+- resolves: #1115432
+  fix 0003-add-TTY-input-audit-support.patch not to revert readline version
+  number to 6.2
+
 * Thu Jun 19 2014 Jan Chaloupka <jchaloup@redhat.com> - 6.3-1
 - resolves: #1071336
   rebase 6.3
