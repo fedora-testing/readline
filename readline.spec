@@ -1,17 +1,19 @@
 Summary: A library for editing typed command lines
 Name: readline
 Version: 6.3
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv3+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
 Source: ftp://ftp.gnu.org/gnu/readline/readline-%{version}.tar.gz
 
-Patch1: 0001-upstream-patches.patch
-Patch2: 0002-fix-file-permissions-remove-RPATH-use-CFLAGS.patch
-Patch3: 0003-add-TTY-input-audit-support.patch
-Patch4: 0004-add-workaround-for-problem-in-gdb.patch
-Patch5: 0005-readline6.3upstreampatches1-6.patch
+Patch5: readline6.3-upstream-patches1-6.patch
+# add workaround for problem in gdb
+# in new version of readline needs to be deleted
+# bz701131
+Patch8: readline-6.2-gdb.patch
+# fix file permissions, remove RPATH, use CFLAGS
+Patch9: readline-6.2-shlib.patch
 
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
@@ -51,14 +53,10 @@ The readline-static package contains the static version of the readline
 library.
 
 %prep
-%autosetup -S git
-
-pushd examples
-rm -f rlfe/configure
-iconv -f iso8859-1 -t utf8 -o rl-fgets.c{_,}
-touch -r rl-fgets.c{,_}
-mv -f rl-fgets.c{_,}
-popd
+%setup -q
+%patch5 -p1
+%patch8 -p1
+%patch9 -p1
 
 %build
 export CPPFLAGS="-I%{_includedir}/ncurses"
@@ -129,6 +127,10 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
+* Tue Jul 22 2014 jchaloup <jchaloup@redhat.com> - 6.3-3
+- related: #1071336
+  new rebase for readline 6.3
+
 * Wed Jul  2 2014 Paul Howarth <paul@city-fan.org> - 6.3-2
 - resolves: #1115432
   fix 0003-add-TTY-input-audit-support.patch not to revert readline version
