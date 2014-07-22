@@ -1,7 +1,7 @@
-From 5c47ed8ba5edfd5bd91b79d5eaf42833ea91afe1 Mon Sep 17 00:00:00 2001
-From: Lukas Nykryn <lnykryn@redhat.com>
-Date: Thu, 3 Apr 2014 15:17:55 +0200
-Subject: [PATCH 2/4] fix file permissions, remove RPATH, use CFLAGS
+From 5f7f73a57b16ef58769004fe2f4111baf1c81690 Mon Sep 17 00:00:00 2001
+From: Jan Chaloupka <jchaloup@redhat.com>
+Date: Mon, 21 Jul 2014 13:50:01 +0200
+Subject: [PATCH] shlib
 
 ---
  shlib/Makefile.in     | 2 +-
@@ -54,5 +54,5 @@ index 1f64433..40827a4 100644
  
  freebsd2*)
 -- 
-1.8.5.3
+1.9.3
 

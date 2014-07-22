@@ -1,18 +1,7 @@
-From 311f25363e35f5058fc8a8f1ba9c0835f169fd96 Mon Sep 17 00:00:00 2001
-From: Lukas Nykryn <lnykryn@redhat.com>
-Date: Thu, 3 Apr 2014 14:41:42 +0200
-Subject: [PATCH 4/4] add workaround for problem in gdb
-
----
- complete.c | 2 +-
- readline.h | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/complete.c b/complete.c
-index cd9aebe..35d86e9 100644
---- a/complete.c
-+++ b/complete.c
-@@ -518,7 +518,7 @@ get_y_or_n (for_pager)
+diff -up ./complete.c.old ./complete.c
+--- ./complete.c.old	2012-01-11 14:26:23.610354454 +0100
++++ ./complete.c	2012-01-11 14:31:44.073348115 +0100
+@@ -485,7 +485,7 @@ get_y_or_n (for_pager)
       driven functions.  Have to wait until next major version to add new
       state definition, since it will change value of RL_STATE_DONE. */
  #if defined (READLINE_CALLBACKS)
@@ -21,11 +10,10 @@ index cd9aebe..35d86e9 100644
      return 1;
  #endif
  
-diff --git a/readline.h b/readline.h
-index 08dcd2b..1df0639 100644
---- a/readline.h
-+++ b/readline.h
-@@ -870,6 +870,8 @@ extern int rl_inhibit_completion;
+diff -up ./readline.h.old ./readline.h
+--- ./readline.h.old	2012-01-11 14:25:55.049711510 +0100
++++ ./readline.h	2012-01-11 14:28:22.854863691 +0100
+@@ -840,6 +840,8 @@ extern int rl_inhibit_completion;
  
  #define RL_STATE_DONE		0x1000000	/* done; accepted line */
  
@@ -34,6 +22,3 @@ index 08dcd2b..1df0639 100644
  #define RL_SETSTATE(x)		(rl_readline_state |= (x))
  #define RL_UNSETSTATE(x)	(rl_readline_state &= ~(x))
  #define RL_ISSTATE(x)		(rl_readline_state & (x))
--- 
-1.8.5.3
-
