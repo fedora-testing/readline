@@ -1,7 +1,7 @@
 Summary: A library for editing typed command lines
 Name: readline
 Version: 6.3
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPLv3+
 Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
@@ -108,7 +108,9 @@ fi
 
 %files
 %defattr(-,root,root,-)
-%doc CHANGES COPYING NEWS README USAGE
+%{!?_licensedir:%global license %%doc}
+%license COPYING
+%doc CHANGES NEWS README USAGE
 /%{_lib}/libreadline*.so.*
 %{_libdir}/libhistory*.so.*
 %{_infodir}/history.info*
@@ -127,6 +129,9 @@ fi
 %{_libdir}/lib*.a
 
 %changelog
+* Mon Aug  4 2014 Tom Callaway <spot@fedoraproject.org> - 6.3-4
+- fix license handling
+
 * Tue Jul 22 2014 jchaloup <jchaloup@redhat.com> - 6.3-3
 - related: #1071336
   new rebase for readline 6.3
