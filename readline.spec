@@ -76,6 +76,7 @@ for l in $RPM_BUILD_ROOT%{_libdir}/libreadline.so; do
 done
 
 rm -rf $RPM_BUILD_ROOT%{_datadir}/readline
+rm -rf $RPM_BUILD_ROOT%{_docdir}/readline
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir*
 
 %clean
@@ -130,6 +131,7 @@ fi
 
 %changelog
 * Thu Aug 13 2015 Miroslav Lichvar <mlichvar@redhat.com> 6.3-7
+- fix building with new rpm
 - rebuild for new ncurses
 
 * Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 6.3-6
