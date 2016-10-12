@@ -3,7 +3,6 @@ Name: readline
 Version: 6.3
 Release: 8%{?dist}
 License: GPLv3+
-Group: System Environment/Libraries
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
 Source: ftp://ftp.gnu.org/gnu/readline/readline-%{version}.tar.gz
 
@@ -31,7 +30,6 @@ commands.
 
 %package devel
 Summary: Files needed to develop programs which use the readline library
-Group: Development/Libraries
 Requires: %{name} = %{version}-%{release}
 Requires: ncurses-devel
 Requires(post): /sbin/install-info
@@ -45,7 +43,6 @@ installed. You also need to have the readline package installed.
 
 %package static
 Summary: Static libraries for the readline library
-Group: Development/Libraries
 Requires: %{name}-devel = %{version}-%{release}
 
 %description static
