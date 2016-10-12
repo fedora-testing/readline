@@ -106,7 +106,6 @@ fi
 
 %files
 %defattr(-,root,root,-)
-%{!?_licensedir:%global license %%doc}
 %license COPYING
 %doc CHANGES NEWS README USAGE
 /%{_lib}/libreadline*.so.*
