@@ -105,7 +105,6 @@ fi
 :
 
 %files
-%defattr(-,root,root,-)
 %license COPYING
 %doc CHANGES NEWS README USAGE
 /%{_lib}/libreadline*.so.*
@@ -114,7 +113,6 @@ fi
 %{_infodir}/rluserman.info*
 
 %files devel
-%defattr(-,root,root,-)
 %doc examples/*.c examples/*.h examples/rlfe
 %{_includedir}/readline
 %{_libdir}/lib*.so
@@ -122,7 +120,6 @@ fi
 %{_infodir}/readline.info*
 
 %files static
-%defattr(-,root,root,-)
 %{_libdir}/lib*.a
 
 %changelog
