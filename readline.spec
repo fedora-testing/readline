@@ -61,23 +61,23 @@ export CPPFLAGS="-I%{_includedir}/ncurses"
 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
-make DESTDIR=$RPM_BUILD_ROOT install
+make DESTDIR=%{buildroot} install
 
-mkdir $RPM_BUILD_ROOT/%{_lib}
-mv $RPM_BUILD_ROOT%{_libdir}/libreadline.so.* $RPM_BUILD_ROOT/%{_lib}
-for l in $RPM_BUILD_ROOT%{_libdir}/libreadline.so; do
+mkdir %{buildroot}/%{_lib}
+mv %{buildroot}%{_libdir}/libreadline.so.* %{buildroot}/%{_lib}
+for l in %{buildroot}%{_libdir}/libreadline.so; do
     ln -sf $(echo %{_libdir} | \
         sed 's,\(^/\|\)[^/][^/]*,..,g')/%{_lib}/$(readlink $l) $l
 done
 
-rm -rf $RPM_BUILD_ROOT%{_datadir}/readline
-rm -rf $RPM_BUILD_ROOT%{_docdir}/readline
-rm -f $RPM_BUILD_ROOT%{_infodir}/dir*
+rm -rf %{buildroot}%{_datadir}/readline
+rm -rf %{buildroot}%{_docdir}/readline
+rm -f %{buildroot}%{_infodir}/dir*
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %post
 /sbin/ldconfig
