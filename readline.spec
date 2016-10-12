@@ -61,8 +61,6 @@ export CPPFLAGS="-I%{_includedir}/ncurses"
 make %{?_smp_mflags}
 
 %install
-rm -rf %{buildroot}
-
 make DESTDIR=%{buildroot} install
 
 mkdir %{buildroot}/%{_lib}
@@ -75,9 +73,6 @@ done
 rm -rf %{buildroot}%{_datadir}/readline
 rm -rf %{buildroot}%{_docdir}/readline
 rm -f %{buildroot}%{_infodir}/dir*
-
-%clean
-rm -rf %{buildroot}
 
 %post
 /sbin/ldconfig
