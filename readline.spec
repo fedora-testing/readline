@@ -169,7 +169,7 @@ fi
 * Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 6.2-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
-* Thu Mar 28 2013 Lukáš Nykrýn <lnykryn@redhat.com> - 6.2-7
+* Thu Mar 28 2013 Lukas Nykryn <lnykryn@redhat.com> - 6.2-7
 - fix aarch64 build (#926433)
 
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 6.2-6
@@ -350,7 +350,7 @@ fi
 * Thu May 23 2002 Tim Powers <timp@redhat.com> 4.2a-5
 - automated rebuild
 
-* Wed Mar 20 2002 Trond Eivind Glomsrød <teg@redhat.com> 4.2a-4
+* Wed Mar 20 2002 Trond Eivind Glomsrod <teg@redhat.com> 4.2a-4
 - Use autoconf 2.53, not 2.52
 
 * Mon Mar  4 2002 Bernhard Rosenkraenzer <bero@redhat.com> 4.2a-3
