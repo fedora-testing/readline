@@ -54,12 +54,12 @@ library.
 %build
 export CPPFLAGS="-I%{_includedir}/ncurses"
 %configure
-make %{?_smp_mflags}
+%make_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make DESTDIR=$RPM_BUILD_ROOT install
+%make_install
 
 mkdir $RPM_BUILD_ROOT/%{_lib}
 mv $RPM_BUILD_ROOT%{_libdir}/libreadline.so.* $RPM_BUILD_ROOT/%{_lib}
