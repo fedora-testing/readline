@@ -49,10 +49,7 @@ The readline-static package contains the static version of the readline
 library.
 
 %prep
-%setup -q
-%patch5 -p1
-%patch8 -p1
-%patch9 -p1
+%autosetup -p1
 
 %build
 export CPPFLAGS="-I%{_includedir}/ncurses"
