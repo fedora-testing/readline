@@ -14,8 +14,8 @@ Patch8: readline-6.2-gdb.patch
 # fix file permissions, remove RPATH, use CFLAGS
 Patch9: readline-6.2-shlib.patch
 
-Requires(post): /sbin/install-info
-Requires(preun): /sbin/install-info
+Requires(post): info
+Requires(preun): info
 BuildRequires: ncurses-devel
 BuildRequires: git
 
@@ -31,8 +31,8 @@ commands.
 Summary: Files needed to develop programs which use the readline library
 Requires: %{name}%{?_isa} = %{version}-%{release}
 Requires: ncurses-devel%{?_isa}
-Requires(post): /sbin/install-info
-Requires(preun): /sbin/install-info
+Requires(post): info
+Requires(preun): info
 
 %description devel
 The Readline library provides a set of functions that allow users to
@@ -65,28 +65,24 @@ rm -f $RPM_BUILD_ROOT%{_infodir}/dir*
 
 %post
 /sbin/ldconfig
-/sbin/install-info %{_infodir}/history.info.gz %{_infodir}/dir &> /dev/null
-/sbin/install-info %{_infodir}/rluserman.info.gz %{_infodir}/dir &> /dev/null
-:
+/sbin/install-info %{_infodir}/history.info %{_infodir}/dir || :
+/sbin/install-info %{_infodir}/rluserman.info %{_infodir}/dir || :
 
 %postun -p /sbin/ldconfig
 
 %preun
 if [ $1 = 0 ]; then
-   /sbin/install-info --delete %{_infodir}/history.info.gz %{_infodir}/dir &> /dev/null
-   /sbin/install-info --delete %{_infodir}/rluserman.info.gz %{_infodir}/dir &> /dev/null
+  /sbin/install-info --delete %{_infodir}/history.info %{_infodir}/dir || :
+  /sbin/install-info --delete %{_infodir}/rluserman.info %{_infodir}/dir || :
 fi
-:
 
 %post devel
-/sbin/install-info %{_infodir}/readline.info.gz %{_infodir}/dir &> /dev/null
-:
+/sbin/install-info %{_infodir}/history.info %{_infodir}/dir || :
 
 %preun devel
 if [ $1 = 0 ]; then
-   /sbin/install-info --delete %{_infodir}/readline.info.gz %{_infodir}/dir &> /dev/null
+  /sbin/install-info --delete %{_infodir}/readline.info %{_infodir}/dir || :
 fi
-:
 
 %files
 %license COPYING
