@@ -57,8 +57,6 @@ export CPPFLAGS="-I%{_includedir}/ncurses"
 %make_build
 
 %install
-rm -rf $RPM_BUILD_ROOT
-
 %make_install
 
 mkdir $RPM_BUILD_ROOT/%{_lib}
@@ -71,9 +69,6 @@ done
 rm -rf $RPM_BUILD_ROOT%{_datadir}/readline
 rm -rf $RPM_BUILD_ROOT%{_docdir}/readline
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir*
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/ldconfig
@@ -101,8 +96,6 @@ fi
 :
 
 %files
-%defattr(-,root,root,-)
-%{!?_licensedir:%global license %%doc}
 %license COPYING
 %doc CHANGES NEWS README USAGE
 /%{_lib}/libreadline*.so.*
@@ -111,7 +104,6 @@ fi
 %{_infodir}/rluserman.info*
 
 %files devel
-%defattr(-,root,root,-)
 %doc examples/*.c examples/*.h examples/rlfe
 %{_includedir}/readline
 %{_libdir}/lib*.so
@@ -119,7 +111,6 @@ fi
 %{_infodir}/readline.info*
 
 %files static
-%defattr(-,root,root,-)
 %{_libdir}/lib*.a
 
 %changelog
