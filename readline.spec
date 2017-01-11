@@ -29,8 +29,8 @@ commands.
 
 %package devel
 Summary: Files needed to develop programs which use the readline library
-Requires: %{name} = %{version}-%{release}
-Requires: ncurses-devel
+Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: ncurses-devel%{?_isa}
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 
@@ -42,7 +42,7 @@ installed. You also need to have the readline package installed.
 
 %package static
 Summary: Static libraries for the readline library
-Requires: %{name}-devel = %{version}-%{release}
+Requires: %{name}%{?_isa}-devel = %{version}-%{release}
 
 %description static
 The readline-static package contains the static version of the readline
