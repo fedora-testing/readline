@@ -1,18 +1,13 @@
 Summary: A library for editing typed command lines
 Name: readline
-Version: 6.3
-Release: 8%{?dist}
+Version: 7.0
+Release: 1%{?dist}
 License: GPLv3+
 URL: http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
 Source: ftp://ftp.gnu.org/gnu/readline/readline-%{version}.tar.gz
 
-Patch5: readline6.3-upstream-patches1-6.patch
-# add workaround for problem in gdb
-# in new version of readline needs to be deleted
-# bz701131
-Patch8: readline-6.2-gdb.patch
 # fix file permissions, remove RPATH, use CFLAGS
-Patch9: readline-6.2-shlib.patch
+Patch1: readline-7.0-shlib.patch
 
 Requires(post): info
 Requires(preun): info
@@ -106,6 +101,10 @@ fi
 %{_libdir}/libhistory.a
 
 %changelog
+* Thu Jan 12 2017 Siteshwar Vashisht <svashisht@redhat.com> - 7.0-1
+- Rebase to Readline-7.0
+  Resolves: #1376611
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 6.3-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
