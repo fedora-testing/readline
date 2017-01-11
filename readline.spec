@@ -59,13 +59,6 @@ export CPPFLAGS="-I%{_includedir}/ncurses"
 %install
 %make_install
 
-mkdir $RPM_BUILD_ROOT/%{_lib}
-mv $RPM_BUILD_ROOT%{_libdir}/libreadline.so.* $RPM_BUILD_ROOT/%{_lib}
-for l in $RPM_BUILD_ROOT%{_libdir}/libreadline.so; do
-    ln -sf $(echo %{_libdir} | \
-        sed 's,\(^/\|\)[^/][^/]*,..,g')/%{_lib}/$(readlink $l) $l
-done
-
 rm -rf $RPM_BUILD_ROOT%{_datadir}/readline
 rm -rf $RPM_BUILD_ROOT%{_docdir}/readline
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir*
@@ -98,20 +91,23 @@ fi
 %files
 %license COPYING
 %doc CHANGES NEWS README USAGE
-/%{_lib}/libreadline*.so.*
-%{_libdir}/libhistory*.so.*
+%{_libdir}/libreadline.so.*
+%{_libdir}/libhistory.so.*
 %{_infodir}/history.info*
 %{_infodir}/rluserman.info*
 
 %files devel
 %doc examples/*.c examples/*.h examples/rlfe
-%{_includedir}/readline
-%{_libdir}/lib*.so
-%{_mandir}/man3/*
+%{_includedir}/readline/
+%{_libdir}/libreadline.so
+%{_libdir}/libhistory.so
+%{_mandir}/man3/readline.3*
+%{_mandir}/man3/history.3*
 %{_infodir}/readline.info*
 
 %files static
-%{_libdir}/lib*.a
+%{_libdir}/libreadline.a
+%{_libdir}/libhistory.a
 
 %changelog
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 6.3-8
